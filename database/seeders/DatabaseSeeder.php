@@ -13,10 +13,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
+        
+        //! DURANTE LO SVILUPPO UTILIZZO QUESTE CREDENZIALI
+        \App\Models\User::factory()->create([
+            'name' => 'Gianluca',
+            'email' => 'gianluca@maffucci.it',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        //! CREO 10 FAKE PROJECT
+        \App\Models\Project::factory(10)->create();
+
     }
 }
