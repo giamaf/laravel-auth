@@ -36,34 +36,85 @@
         <div class="d-flex gap-1">
             <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning"><i
                     class="fas fa-pencil me-1"></i>Edit</a>
+            <button type="button" class="btn btn-danger" id="delete-button"><i
+                    class="fas fa-trash-can me-1"></i>Delete</button>
 
-            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" id="delete-form">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-can me-1"></i>Delete</button>
+            <!-- Modal -->
 
-                <!-- Modal -->
-                <div class="modal fade" id="delete-confirm-modal" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete confirmation</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Do you want to delete this project?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" id="modal-back-button"
-                                    data-bs-dismiss="modal">Back</button>
-                                <button type="submit" class="btn btn-primary" id="modal-confirm-button">Confirm</button>
-                            </div>
+            <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete confirmation</h1>
+                            <button type="button" class="btn-close modal-buttons" data-bs-dismiss="modal"
+                                aria-label="Close" value="exit"></button>
                         </div>
+                        <div class="modal-body">
+                            <p>Do you want to delete this project?</p>
+                        </div>
+                        <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" id="delete-form">
+                            @csrf
+                            @method('DELETE')
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary modal-buttons" data-bs-dismiss="modal"
+                                    value="back">Back</button>
+                                <button type="button" class="btn btn-primary modal-buttons"
+                                    value="confirm">Confirm</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    <script>
+        const deleteButton = document.getElementById('delete-button')
+        const deleteForm = document.getElementById('delete-form');
+        const modal = document.getElementById('modal');
+        const modalButtons = document.querySelectorAll('.modal-buttons');
+
+        // FUNZIONI
+        const isVisible = () => {
+            // Faccio apparire la modale
+            modal.classList.add('d-block');
+            modal.classList.toggle('show');
+        };
+
+        const isHidden = () => {
+            // Faccio apparire la modale
+            modal.classList.remove('d-block');
+            modal.classList.toggle('show');
+        };
+
+        // Al click sul tasto cancella...
+        deleteButton.addEventListener('click', () => {
+
+            // Mostro la modale
+            isVisible();
+
+            // Per ogni tasto all'interno della modale
+            modalButtons.forEach(button => {
+
+                // Al click su un tasto all'interno della modale
+                button.addEventListener('click', () => {
+
+                    // Recupero il value del tasto per capire cosa fare
+                    const buttonValue = button.value;
+
+                    console.log('Hai cliccato:', buttonValue);
+
+                    // Se l'utente clicca su back o su exit allora la modale sparisce
+                    if (buttonValue !== 'confirm') isHidden()
+
+                    // Se l'utente clicca su conferma allora invio il form..
+                    // if (buttonValue === 'confirm') deleteForm.submit();
+
+                })
+            });
+        })
+    </script>
 @endsection
