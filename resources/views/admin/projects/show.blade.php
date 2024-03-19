@@ -81,40 +81,43 @@
         const isVisible = () => {
             // Faccio apparire la modale
             modal.classList.add('d-block');
-            modal.classList.toggle('show');
+            modal.classList.toggle('fade');
         };
 
         const isHidden = () => {
-            // Faccio apparire la modale
+            // Faccio sparire la modale
+            modal.classList.toggle('fade');
             modal.classList.remove('d-block');
-            modal.classList.toggle('show');
         };
 
-        // Al click sul tasto cancella...
-        deleteButton.addEventListener('click', () => {
+        const deleteClicked = () => {
+            // Al click sul tasto cancella...
+            deleteButton.addEventListener('click', () => {
+                // Mostro la modale
+                isVisible();
+            })
+        }
 
-            // Mostro la modale
-            isVisible();
+        // LOGICA
 
-            // Per ogni tasto all'interno della modale
-            modalButtons.forEach(button => {
+        // Al click sul tasto cancella appare la modale...
+        deleteClicked();
 
-                // Al click su un tasto all'interno della modale
-                button.addEventListener('click', () => {
+        // Per ogni tasto all'interno della modale
+        modalButtons.forEach(button => {
 
-                    // Recupero il value del tasto per capire cosa fare
-                    const buttonValue = button.value;
+            // Al click su un tasto all'interno della modale
+            button.addEventListener('click', () => {
 
-                    console.log('Hai cliccato:', buttonValue);
+                // Recupero il value del tasto per capire cosa fare
+                const buttonValue = button.value;
 
-                    // Se l'utente clicca su back o su exit allora la modale sparisce
-                    if (buttonValue !== 'confirm') isHidden()
+                // Se l'utente clicca su conferma allora invio il form..
+                if (buttonValue === 'confirm') deleteForm.submit();
 
-                    // Se l'utente clicca su conferma allora invio il form..
-                    // if (buttonValue === 'confirm') deleteForm.submit();
-
-                })
-            });
-        })
+                // Se l'utente clicca su back o su exit allora la modale sparisce
+                if (buttonValue !== 'confirm') isHidden()
+            })
+        });
     </script>
 @endsection
