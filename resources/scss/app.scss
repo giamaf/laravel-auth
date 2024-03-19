@@ -1,1 +1,3 @@
-@import '~bootstrap/scss/bootstrap'
+@use '~bootstrap/scss/bootstrap';
+@use '_generics.scss';
+@use '_project_details.scss';
