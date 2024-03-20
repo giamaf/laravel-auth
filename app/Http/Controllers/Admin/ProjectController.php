@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -38,7 +39,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.projects.create');
     }
 
     /**
@@ -46,7 +47,25 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Prendo i dati che arrivano dalla request
+        $data = $request->all();
+
+        // Istanzio un nuovo progetto
+        $project = new Project;
+
+        // Compilo i campi della table
+        $project->fill($data);
+
+        // Gestisco lo slug
+        $project->slug = Str::slug($project->name);
+
+        // Gestisco is_completed verificando se esiste una chiave nell'array che mi arriva
+        $project->is_completed = array_key_exists('is_completed', $data);
+
+        // Salvo nel db
+        $project->save();
+
+        return to_route('admin.projects.show', $project)->with('message', 'Project create successful')->with('type', 'success');
     }
 
     /**

@@ -3,20 +3,26 @@
 @section('title', 'Projects')
 
 @section('content')
-    <header class="d-flex justify-content-between align-items-strech border-bottom py-2">
+    <header class="d-flex justify-content-between align-items-center border-bottom py-2">
         <h3 class="m-0">Projects</h3>
 
         {{-- Filtro --}}
-        <form action="{{ route('admin.projects.index') }}" method="GET">
-            <div class="d-flex justify-content-between gap-1">
-                <select class="form-select" name="filter">
-                    <option value="" @if ($filter === '') selected @endif>All</option>
-                    <option value="yes" @if ($filter === 'yes') selected @endif>Yes</option>
-                    <option value="no" @if ($filter === 'no') selected @endif>No</option>
-                </select>
-                <button class="btn btn-outline-primary">Search</button>
-            </div>
-        </form>
+        <div class="d-flex justify-content-between align-items-center gap-3">
+            <form action="{{ route('admin.projects.index') }}" method="GET">
+                <div class="d-flex justify-content-between gap-1">
+                    <select class="form-select" name="filter">
+                        <option value="" @if ($filter === '') selected @endif>All</option>
+                        <option value="yes" @if ($filter === 'yes') selected @endif>Yes</option>
+                        <option value="no" @if ($filter === 'no') selected @endif>No</option>
+                    </select>
+                    <button class="btn btn-outline-primary">Search</button>
+                </div>
+            </form>
+
+            {{-- Button per aggiungere un nuovo progetto --}}
+            <a href="{{ route('admin.projects.create') }}" class="btn btn-success"><i class="fas fa-plus me-1"></i>Add
+                New</a>
+        </div>
     </header>
 
     <table class="table table-striped my-4">
