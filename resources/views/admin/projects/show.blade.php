@@ -18,10 +18,10 @@
         <p>{{ $project->content }}</p>
         <div class="date">
             <figcaption class="fw-lighter">
-                <span>created:</span> {{ $project->created_at }}
+                <span>created:</span> {{ $project->getFormatDate('created_at', 'd-m-Y H:i') }}
             </figcaption>
             <figcaption class="fw-lighter">
-                <span>updated:</span> {{ $project->updated_at }}
+                <span>updated:</span> {{ $project->getFormatDate('updated_at', 'd-m-Y H:i') }}
             </figcaption>
         </div>
     </section>
