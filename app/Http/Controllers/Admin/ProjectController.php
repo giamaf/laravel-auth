@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -48,6 +49,25 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate(
+            [
+                'name' => 'required|string|min:3|max:50|unique:posts',
+                'content' => 'required|string',
+                'image' => 'nullable|url',
+                'is_completed' => 'nullable|boolean',
+            ],
+            [
+                'name.required' => 'Project name required',
+                'name.min' => 'Project name must have at least :min',
+                'name.max' => 'Project name must have max :max',
+                'name.unique' => 'This Project name already exsist',
+                'name.required' => 'Content required',
+                'image.url' => 'Invalid url',
+                'is_completed.boolean' => 'Invalid field',
+            ]
+        );
+
         // Prendo i dati che arrivano dalla request
         $data = $request->all();
 
@@ -90,6 +110,25 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+
+        $request->validate(
+            [
+                'name' => ['required', 'string', 'min:3', 'max:50', Rule::unique('projects')->ignore($project->id)],
+                'content' => 'required|string',
+                'image' => 'nullable|url',
+                'is_completed' => 'nullable|boolean',
+            ],
+            [
+                'name.required' => 'Project name required',
+                'name.min' => 'Project name must have at least :min',
+                'name.max' => 'Project name must have max :max',
+                'name.unique' => 'This Project name already exsist',
+                'name.required' => 'Content required',
+                'image.url' => 'Invalid url',
+                'is_completed.boolean' => 'Invalid field',
+            ]
+        );
+
         // Prendo i dati che arrivano dalla request
         $data = $request->all();
 
