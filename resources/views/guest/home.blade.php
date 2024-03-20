@@ -7,10 +7,6 @@
         <h1 class="my-3">Welcome to my portfolio</h1>
     </header>
 
-    @if ($projects->hasPages())
-        {{ $projects->links() }}
-    @endif
-
     <section>
         <div class="row row-gap-3">
             @forelse ($projects as $project)
