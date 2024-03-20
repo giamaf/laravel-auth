@@ -3,8 +3,20 @@
 @section('title', 'Projects')
 
 @section('content')
-    <header>
-        <h3 class="border-bottom py-1">Projects</h3>
+    <header class="d-flex justify-content-between align-items-strech border-bottom py-2">
+        <h3 class="m-0">Projects</h3>
+
+        {{-- Filtro --}}
+        <form action="{{ route('admin.projects.index') }}" method="GET">
+            <div class="d-flex justify-content-between gap-1">
+                <select class="form-select" name="filter">
+                    <option value="" @if ($filter === '') selected @endif>All</option>
+                    <option value="yes" @if ($filter === 'yes') selected @endif>Yes</option>
+                    <option value="no" @if ($filter === 'no') selected @endif>No</option>
+                </select>
+                <button class="btn btn-outline-primary">Search</button>
+            </div>
+        </form>
     </header>
 
     <table class="table table-striped my-4">
