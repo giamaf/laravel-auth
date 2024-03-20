@@ -23,8 +23,8 @@ class ProjectFactory extends Factory
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'content' => fake()->paragraphs(15, true),
-            'image' => fake()->imageUrl(250, 250, true ),
+            'content' => fake()->paragraphs(1, true),
+            'image' => fake()->imageUrl(250, 250, true),
         ];
     }
 }
