@@ -81,7 +81,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -89,7 +89,19 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        // Prendo i dati che arrivano dalla request
+        $data = $request->all();
+
+        // Gestisco lo slug
+        $project->slug = Str::slug($project->name);
+
+        // Gestisco is_completed verificando se esiste una chiave nell'array che mi arriva
+        $project->is_completed = array_key_exists('is_completed', $data);
+
+        // Salvo nel db
+        $project->update();
+
+        return to_route('admin.projects.show', $project)->with('message', 'Project edited successful')->with('type', 'success');
     }
 
     /**
