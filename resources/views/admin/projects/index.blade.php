@@ -13,6 +13,7 @@
                 <th scope="col">id</th>
                 <th scope="col">Name</th>
                 <th scope="col">Slug</th>
+                <th scope="col">Completed</th>
                 <th scope="col">Created</th>
                 <th scope="col">Updated</th>
                 <th></th>
@@ -24,6 +25,7 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->name }}</td>
                     <td>{{ $project->slug }}</td>
+                    <td>{{ $project->is_completed ? 'Yes' : 'No' }}</td>
                     <td>{{ $project->created_at }}</td>
                     <td>{{ $project->updated_at }}</td>
                     <td>

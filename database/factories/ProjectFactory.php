@@ -25,6 +25,7 @@ class ProjectFactory extends Factory
             'slug' => Str::slug($name),
             'content' => fake()->paragraphs(1, true),
             'image' => fake()->imageUrl(250, 250, true),
+            'is_completed' => fake()->boolean(),
         ];
     }
 }
