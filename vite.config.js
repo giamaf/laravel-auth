@@ -11,8 +11,8 @@ export default defineConfig({
             input: [
                 'resources/scss/app.scss',
                 'resources/js/app.js',
-                'resources/js/show_delete_confirmation.js',
-                'resources/js/index_delete_confirmation.js',],
+                'resources/js/delete_confirmation.js'
+            ],
             refresh: true,
         }),
     ],

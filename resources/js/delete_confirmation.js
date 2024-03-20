@@ -3,7 +3,7 @@ const deleteButtons = document.querySelectorAll('.delete-buttons')
 const deleteForm = document.getElementById('delete-form');
 const modal = document.getElementById('modal');
 const modalButtons = document.querySelectorAll('.modal-buttons');
-
+console.log(deleteButtons)
 //# FUNZIONI
 const isVisible = () => {
     // Faccio apparire la modale
