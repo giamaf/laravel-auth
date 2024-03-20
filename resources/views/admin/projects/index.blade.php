@@ -38,8 +38,8 @@
                     <td>{{ $project->name }}</td>
                     <td>{{ $project->slug }}</td>
                     <td>{{ $project->is_completed ? 'Yes' : 'No' }}</td>
-                    <td>{{ $project->created_at }}</td>
-                    <td>{{ $project->updated_at }}</td>
+                    <td>{{ $project->getFormatDate('created_at', 'm-Y') }}</td>
+                    <td>{{ $project->getFormatDate('updated_at', 'm-Y') }}</td>
                     <td>
                         <div class="d-flex justify-content-end gap-1">
                             <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-secondary">
