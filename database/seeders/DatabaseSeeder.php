@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
-        
+
         //! DURANTE LO SVILUPPO UTILIZZO QUESTE CREDENZIALI
         \App\Models\User::factory()->create([
             'name' => 'Gianluca',
@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         //! CREO 10 FAKE PROJECT
-        \App\Models\Project::factory(10)->create();
-
+        \App\Models\Project::factory(30)->create();
     }
 }
