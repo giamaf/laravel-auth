@@ -62,7 +62,7 @@ class ProjectController extends Controller
                 'name.min' => 'Project name must have at least :min',
                 'name.max' => 'Project name must have max :max',
                 'name.unique' => 'This Project name already exsist',
-                'name.required' => 'Content required',
+                'content.required' => 'Content required',
                 'image.url' => 'Invalid url',
                 'is_completed.boolean' => 'Invalid field',
             ]
