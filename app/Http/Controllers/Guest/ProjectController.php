@@ -11,8 +11,12 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
+    public function show(string $slug)
     {
+        $project = Project::where('slug', '=', $slug)->first();
+
+        if (!$project) abort(404);
+
         return view('guest.projects.show', compact('project'));
     }
 }

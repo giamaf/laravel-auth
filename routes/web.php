@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 // Rotta per gli utenti visitatori
 Route::get('/', GuestHomeController::class)->name('guest.home');
 
-Route::get('/projects/{project}', [GuestProjectController::class, 'show'])->name('guest.projects.show');
+Route::get('/projects/{slug}', [GuestProjectController::class, 'show'])->name('guest.projects.show');
 
 // Rotte per l'amministratore
 
