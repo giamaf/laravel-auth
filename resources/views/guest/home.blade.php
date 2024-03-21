@@ -19,6 +19,8 @@
                             <h5 class="card-title">{{ $project->name }}</h5>
                             <p class="small">{{ $project->content }}</p>
                             <p class="small"><small>{{ $project->created_at }}</small></p>
+                            <a href="{{ route('guest.projects.show', $project) }}" class="btn btn-dark"><i
+                                    class="far fa-eye me-1"></i>view</a>
                         </div>
                     </div>
                 </div>

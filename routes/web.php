@@ -3,7 +3,8 @@
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Guest\HomeController as GuestHomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Guest\ProjectController as GuestProjectController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\HomeController as AdminHomeController;
 
@@ -21,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 // Rotta per gli utenti visitatori
 Route::get('/', GuestHomeController::class)->name('guest.home');
 
+Route::get('/projects/{project}', [GuestProjectController::class, 'show'])->name('guest.projects.show');
+
 // Rotte per l'amministratore
 
 //* OPZIONE 1 (no grouping)
@@ -34,7 +37,7 @@ Route::get('/', GuestHomeController::class)->name('guest.home');
 // Route::delete('/admin/projects/{project}', [ProjectController::class, 'destroy'])->name('admin.projects.destroy')->middleware('auth');
 
 //* OPZIONE 2 (grouping)
-Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
+Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function () {
 
     //# ROTTA ADMIN HOME
     Route::get('', AdminHomeController::class)->middleware(['auth'])->name('.home');
@@ -51,7 +54,7 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
     //# ROTTE ADMIN PROJECTS - OPZIONE 2
     //! RIASSUNTO DA RIGA 41 A RIGA 47 CON UNA SOLA ROTTA CHE SOTTOBANCO GESTISCE LE ROTTE DI CUI SOPRA
     //! PER VERIFICARE -> php artisan route:list
-    Route::resource('projects', ProjectController::class);
+    Route::resource('projects', AdminProjectController::class);
 });
 
 Route::middleware('auth')->group(function () {
@@ -60,4 +63,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
