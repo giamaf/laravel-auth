@@ -52,7 +52,7 @@ class ProjectController extends Controller
 
         $request->validate(
             [
-                'name' => 'required|string|min:3|max:50|unique:posts',
+                'name' => 'required|string|min:3|max:50|unique:projects',
                 'content' => 'required|string',
                 'image' => 'nullable|url',
                 'is_completed' => 'nullable|boolean',

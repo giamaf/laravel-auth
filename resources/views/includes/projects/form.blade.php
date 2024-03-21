@@ -26,7 +26,8 @@
     <div class="col-6">
         <div class="mb-3">
             <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="slug">
+            <input type="text" class="form-control" id="slug"
+                value="{{ Str::slug(old('title', $project->title)) }}" disabled>
         </div>
     </div>
     <div class="col-12">
@@ -85,3 +86,14 @@
     </div>
 </div>
 </form>
+
+@section('scripts')
+    <script>
+        const projectName = document.getElementById('name');
+        const slug = document.getElementById('slug');
+
+        projectName.addEventListener('blur', () => {
+            slug.value = projectName.value.trim().toLowerCase().split(' ').join('-');
+        })
+    </script>
+@endsection
