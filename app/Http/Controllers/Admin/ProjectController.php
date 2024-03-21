@@ -152,6 +152,28 @@ class ProjectController extends Controller
 
         $project->delete();
 
-        return to_route('admin.projects.index')->with('message', 'Delete successful')->with('type', 'warning');
+        return to_route('admin.projects.index')->with('message', 'Trashed successful')->with('type', 'warning');
+    }
+
+    //* ROTTE SOFT DELETE
+
+    public function trash()
+    {
+        $projects = Project::onlyTrashed()->get();
+        return view('admin.projects.trash', compact('projects'));
+    }
+
+    public function restore(Project $project)
+    {
+        $project->restore();
+
+        return to_route('admin.projects.index')->with('message', 'Restore successful')->with('type', 'warning');
+    }
+
+    public function drop(Project $project)
+    {
+        $project->forceDelete();
+
+        return to_route('admin.projects.trash')->with('message', 'Deleted successful')->with('type', 'warning');
     }
 }

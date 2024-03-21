@@ -42,6 +42,11 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function () {
     //# ROTTA ADMIN HOME
     Route::get('', AdminHomeController::class)->middleware(['auth'])->name('.home');
 
+    //# ROTTE SOFT DELETE
+    Route::get('/projects/trash', [AdminProjectController::class, 'trash'])->name('projects.trash');
+    Route::patch('/projects/{project}/restore', [AdminProjectController::class, 'restore'])->name('projects.restore')->withTrashed();
+    Route::delete('/projects/{project}/drop', [AdminProjectController::class, 'drop'])->name('projects.drop')->withTrashed();
+
     //# ROTTE ADMIN PROJECTS - OPZIONE 1
     // Route::get('/projects', [ProjectController::class, 'index'])->name('.projects.index');
     // Route::get('/projects/create', [ProjectController::class, 'create'])->name('.projects.create');
@@ -59,8 +64,8 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->withTrashed();
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->withTrashed();
 });
 
 require __DIR__ . '/auth.php';

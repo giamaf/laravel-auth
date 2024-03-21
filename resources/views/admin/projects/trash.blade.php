@@ -1,31 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Projects')
+@section('title', 'Trash')
 
 @section('content')
     <header class="d-flex justify-content-between align-items-center border-bottom py-2">
-        <h3 class="m-0">Projects</h3>
+        <h3 class="m-0">Erased Projects</h3>
 
-        {{-- Filtro --}}
-        <div class="d-flex justify-content-between align-items-center gap-3">
-            <form action="{{ route('admin.projects.index') }}" method="GET">
-                <div class="d-flex justify-content-between gap-1">
-                    <select class="form-select" name="filter">
-                        <option value="" @if ($filter === '') selected @endif>All</option>
-                        <option value="yes" @if ($filter === 'yes') selected @endif>Yes</option>
-                        <option value="no" @if ($filter === 'no') selected @endif>No</option>
-                    </select>
-                    <button class="btn btn-outline-primary">search</button>
-                </div>
-            </form>
-
-            {{-- Button per aggiungere un nuovo progetto --}}
-            <div class="d-flex justify-content-between align-items-center gap-1">
-                <a href="{{ route('admin.projects.create') }}" class="btn btn-success"><i class="fas fa-plus me-1"></i>add
-                    New</a>
-                <a href="{{ route('admin.projects.trash') }}" class="btn btn-danger"><i
-                        class="fas fa-trash me-1"></i>trash</a>
-            </div>
+        {{-- Buttons --}}
+        <div class="d-flex justify-content-between align-items-center gap-1">
+            <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-dark"><i
+                    class="fas fa-arrow-left me-1"></i>projects</a>
+            <a href="#" class="btn btn-success"><i class="fas fa-arrows-rotate me-1"></i>restore all</a>
+            <a href="#" class="btn btn-danger"><i class="fas fa-trash me-1"></i>erase all</a>
         </div>
     </header>
 
@@ -51,16 +37,22 @@
                     <td>{{ $project->getFormatDate('created_at', 'm-Y') }}</td>
                     <td>{{ $project->getFormatDate('updated_at', 'm-Y') }}</td>
                     <td>
+
                         <div class="d-flex justify-content-end gap-1">
-                            <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-secondary">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning"><i
-                                    class="fas fa-pencil "></i></a>
+                            <!-- Restore Form -->
+                            <form action="{{ route('admin.projects.restore', $project->id) }}" method="POST"
+                                id="restore-form">
+                                @csrf
+                                @method('PATCH')
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" value="back"><i
+                                            class="fas fa-arrows-rotate me-1"></i>restore</button>
+                                </div>
+                            </form>
+
+                            {{-- Delete Form --}}
                             <button type="button" class="btn btn-danger delete-buttons"><i
                                     class="fas fa-trash-can"></i></button>
-
-                            <!-- Modal -->
                             <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false"
                                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -73,14 +65,14 @@
                                         <div class="modal-body">
                                             Do you want to delete this project?
                                         </div>
-                                        <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST"
+                                        <form action="{{ route('admin.projects.drop', $project->id) }}" method="POST"
                                             id="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary modal-buttons"
                                                     data-bs-dismiss="modal" value="back">Back</button>
-                                                <button type="button" class="btn btn-danger modal-buttons"
+                                                <button type="submit" class="btn btn-danger modal-buttons"
                                                     value="confirm">Delete</button>
                                             </div>
                                         </form>
@@ -99,10 +91,6 @@
             @endforelse
         </tbody>
     </table>
-
-    @if ($projects->hasPages())
-        {{ $projects->links() }}
-    @endif
 @endsection
 
 
