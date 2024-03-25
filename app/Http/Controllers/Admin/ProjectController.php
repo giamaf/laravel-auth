@@ -90,10 +90,16 @@ class ProjectController extends Controller
         //! Se lo faccio PRIMA del fill allora posso mantenere 'image' nel fillable del model
         //! Se lo faccio DOPO il fill allora nel model devo togliere 'image' dal fillable del model.
         if (array_key_exists('image', $data)) {
+
+            // Riprendiamo l'estensione del file caricato
+            $extension = $data['image']->extension();
+            $image_name = "$project->slug.$extension";
+
             //! Se lascio il primo argomento vuoto allora salverà nel disco di default (storage/app/public)...
             // Se invece inserisco qualcosa allora verrà creata(se non esiste) una cartella apposita per gli elementi da salvare
             // Il secondo argomento invece è il file da salvare
-            $image_url = Storage::putFile('project_image', $data['image']);
+            // Il terzo parametro assegna lo slug come nome del file (montato in precedenza $imagename)
+            $image_url = Storage::putFileAs('project_image', $data['image'], $image_name);
 
             // Inserisco l'immagine nell'istanza
             $project->image = $image_url;
@@ -163,10 +169,15 @@ class ProjectController extends Controller
             //# Controllo se c'è già un'immagine
             if ($project->image) Storage::delete($project->image);
 
+            // Riprendiamo l'estensione del file caricato
+            $extension = $data['image']->extension();
+            $image_name = "$project->slug.$extension";
+
             //! Se lascio il primo argomento vuoto allora salverà nel disco di default (storage/app/public)...
             // Se invece inserisco qualcosa allora verrà creata(se non esiste) una cartella apposita per gli elementi da salvare
             // Il secondo argomento invece è il file da salvare
-            $image_url = Storage::putFile('project_image', $data['image']);
+            // Il terzo parametro assegna lo slug come nome del file (montato in precedenza $imagename)
+            $image_url = Storage::putFileAs('project_image', $data['image'], $image_name);
 
             // Inserisco l'immagine nell'istanza
             $project->image = $image_url;
