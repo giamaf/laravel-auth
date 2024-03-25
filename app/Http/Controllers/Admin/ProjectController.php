@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -83,6 +84,20 @@ class ProjectController extends Controller
 
         // Gestisco is_completed verificando se esiste una chiave nell'array che mi arriva
         $project->is_completed = array_key_exists('is_completed', $data);
+
+        // Controllo se mi arriva un file
+        //! ATTENZIONE
+        //! Se lo faccio PRIMA del fill allora posso mantenere 'image' nel fillable del model
+        //! Se lo faccio DOPO il fill allora nel model devo togliere 'image' dal fillable del model.
+        if (array_key_exists('image', $data)) {
+            //! Se lascio il primo argomento vuoto allora salverà nel disco di default (storage/app/public)...
+            // Se invece inserisco qualcosa allora verrà creata(se non esiste) una cartella apposita per gli elementi da salvare
+            // Il secondo argomento invece è il file da salvare
+            $image_url = Storage::putFile('project_image', $data['image']);
+
+            // Inserisco l'immagine nell'istanza
+            $project->image = $image_url;
+        }
 
         // Salvo nel db
         $project->save();
