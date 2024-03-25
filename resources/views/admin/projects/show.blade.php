@@ -13,7 +13,8 @@
     {{-- Main --}}
     <section class="single-project clearfix">
         @if ($project->image)
-            <img src="{{ $project->image }}" alt="{{ $project->title }}" class="float-start rounded me-2">
+            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}"
+                class="img-fluid float-start rounded me-2">
         @endif
         <p>{{ $project->content }}</p>
         <div class="date">
