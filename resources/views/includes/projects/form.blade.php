@@ -50,10 +50,28 @@
     <div class="col-11">
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
+
+            {{-- Input nascosto se non ho un'immagine --}}
+            <div @class(['input-group', 'd-none' => !$project->image]) id="previous-image-field">
+                <button class="btn btn-outline-secondary" type="button" id="change-image-button">upload</button>
+                <input type="text" class="form-control" value="{{ old('image', $project->image ?? '') }}" disabled>
+            </div>
+
+
             <input type="file"
-                class="form-control @error('image') is-invalid @elseif (old('image', '')) is-valid @enderror"
-                id="image" name="image" placeholder="http:// or https://"
-                value="{{ old('image', $project->image ?? '') }}">
+                class="form-control  @if ($project->image) d-none @endif @error('image') is-invalid @elseif (old('image', '')) is-valid @enderror"
+                id="image" name="image" placeholder="http:// or https://">
+
+
+
+
+
+
+
+
+
+
+
             @error('image')
                 <div class="invalid-feedback">
                     {{ $message }}
