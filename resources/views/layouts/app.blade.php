@@ -45,6 +45,9 @@
             @include('includes.layouts.alert')
 
             @yield('content')
+
+            {{-- Modal --}}
+            @include('includes.layouts.modal')
         </main>
 
         {{-- Footer --}}

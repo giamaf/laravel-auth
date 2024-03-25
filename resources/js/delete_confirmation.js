@@ -1,49 +1,59 @@
 //# OPERAZIONI PRELIMINARI
-const deleteButtons = document.querySelectorAll('.delete-buttons')
-const deleteForm = document.getElementById('delete-form');
+const deleteForms = document.querySelectorAll('.delete-form');
 const modal = document.getElementById('modal');
-const modalButtons = document.querySelectorAll('.modal-buttons');
+const modalBody = document.querySelector('.modal-body');
+const modalTitle = document.querySelector('.modal-title');
+const deleteConfirmation = document.getElementById('modal-delete-confirmation');
+
+
+//# VARIABILI
+let activeForm = null;
 
 //# FUNZIONI
-const isVisible = () => {
-    // Faccio apparire la modale
-    modal.classList.add('d-block');
-    modal.classList.toggle('fade');
-};
-
-const isHidden = () => {
-    // Faccio sparire la modale
-    modal.classList.toggle('fade');
-    modal.classList.remove('d-block');
-};
-
-const deleteClicked = () => {
-    // Al click sul tasto cancella...
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Mostro la modale
-            isVisible();
-        });
-    })
+// Funzione per inserire i contenuti
+const contentsFill = () => {
+    deleteConfirmation.innerText = 'Delete';
+    deleteConfirmation.className = 'btn btn-danger';
+    modalTitle.innerText = 'Delete project';
+    modalBody.innerText = 'Are you sure to delete this project?'
 }
 
-//* LOGICA
-// Al click sul tasto cancella appare la modale...
-deleteClicked();
+const deleteProject = () => {
+    deleteConfirmation.addEventListener('click', () => {
+        // Invio il form...
+        if (activeForm) activeForm.submit();
+    });
+}
 
-// Per ogni tasto all'interno della modale
-modalButtons.forEach(button => {
+const clearActiveForm = () => {
+    // Alla chiusura della modale...
+    modal.addEventListener('hidden.bs.modal', () => {
+        // Ripulisco l'active form
+        activeForm = null;
+    });
+};
 
-    // Al click su un tasto all'interno della modale
-    button.addEventListener('click', () => {
+//* LOGICA -------------------------------------------
+// Per ogni tasto 'cestino' aggiungo un event listener
+deleteForms.forEach(form => {
+    // Al click sul tasto 'cestino'...
+    form.addEventListener('submit', e => {
+        // Impedisco il ricaricamento della pagina
+        e.preventDefault();
 
-        // Recupero il value del tasto per capire cosa fare
-        const buttonValue = button.value;
+        // Al submit del form devo capire quale devo eliminare
+        activeForm = form;
+        console.log(activeForm);
 
-        // Se l'utente clicca su conferma allora invio il form..
-        if (buttonValue === 'confirm') deleteForm.submit();
-
-        // Se l'utente clicca su back o su exit allora la modale sparisce
-        if (buttonValue !== 'confirm') isHidden()
-    })
+        // Inserisco i contenuti
+        contentsFill();
+    });
 });
+
+// Al click sul tasto 'delete'...
+deleteProject();
+
+// Ripulisco l'activeForm
+clearActiveForm();
+
+//* --------------------------------------------------

@@ -36,34 +36,12 @@
         <div class="d-flex gap-1">
             <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning"><i
                     class="fas fa-pencil me-1"></i>Edit</a>
-            <button type="button" class="btn btn-danger delete-buttons"><i
-                    class="fas fa-trash-can me-1"></i>Delete</button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Confirmation</h1>
-                            <button type="button" class="btn-close modal-buttons" data-bs-dismiss="modal"
-                                aria-label="Close" value="exit"></button>
-                        </div>
-                        <div class="modal-body">
-                            Do you want to delete this project?
-                        </div>
-                        <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" id="delete-form">
-                            @csrf
-                            @method('DELETE')
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary modal-buttons" data-bs-dismiss="modal"
-                                    value="back">Back</button>
-                                <button type="button" class="btn btn-danger modal-buttons" value="confirm">Delete</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="delete-form"
+                data-bs-toggle="modal" data-bs-target="#modal">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-can me-1"></i>Delete</button>
+            </form>
         </div>
     </section>
 @endsection
