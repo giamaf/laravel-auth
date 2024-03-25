@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="col-1">
-        <img src="{{ old('image', $project->image) ? asset('storage/' . old('image', $project->image)) : 'https://marcolanci.it/boolean/assets/placeholder.png' }}"
+        <img src="{{ old('image', $project->image) ? $projcet->renderImage() : 'https://marcolanci.it/boolean/assets/placeholder.png' }}"
             alt="project-img" id="preview" class="img-fluid rounded">
     </div>
     <div class="col-2">

@@ -13,7 +13,7 @@
                 <div class="col-6">
                     <div class="card text-bg-dark">
                         @if ($project->image)
-                            <img src="{{ $project->image }}" class="card-img" alt="{{ $project->title }}">
+                            <img src="{{ $project->renderImage() }}" class="card-img" alt="{{ $project->title }}">
                         @endif
                         <div class="card-img-overlay">
                             <h5 class="card-title">{{ $project->name }}</h5>
