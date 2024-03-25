@@ -155,8 +155,25 @@ class ProjectController extends Controller
         // Gestisco is_completed verificando se esiste una chiave nell'array che mi arriva
         $project->is_completed = array_key_exists('is_completed', $data);
 
+        // Controllo se mi arriva un file
+        //! ATTENZIONE
+        //! Se lo faccio PRIMA del fill allora posso mantenere 'image' nel fillable del model
+        //! Se lo faccio DOPO il fill allora nel model devo togliere 'image' dal fillable del model.
+        if (array_key_exists('image', $data)) {
+            //# Controllo se c'è già un'immagine
+            if ($project->image) Storage::delete($project->image);
+
+            //! Se lascio il primo argomento vuoto allora salverà nel disco di default (storage/app/public)...
+            // Se invece inserisco qualcosa allora verrà creata(se non esiste) una cartella apposita per gli elementi da salvare
+            // Il secondo argomento invece è il file da salvare
+            $image_url = Storage::putFile('project_image', $data['image']);
+
+            // Inserisco l'immagine nell'istanza
+            $project->image = $image_url;
+        }
+
         // Salvo nel db
-        $project->update();
+        $project->update($data);
 
         return to_route('admin.projects.show', $project)->with('message', 'Project edited successful')->with('type', 'success');
     }
@@ -190,8 +207,11 @@ class ProjectController extends Controller
 
     public function drop(Project $project)
     {
+        // Controllo se c'è un file immagine alla cancellazione definitiva
+        // Se c'è allora lo elimino definitivamente dalla cartella
+        if ($project->image) Storage::delete($project->image);
         $project->forceDelete();
 
-        return to_route('admin.projects.trash')->with('message', 'Deleted successful')->with('type', 'warning');
+        return to_route('admin.projects.trash')->with('message', 'Erased definitively successful')->with('type', 'warning');
     }
 }
