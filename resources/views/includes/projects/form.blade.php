@@ -28,7 +28,7 @@
         <div class="mb-3">
             <label for="slug" class="form-label">Slug</label>
             <input type="text" class="form-control" id="slug"
-                value="{{ Str::slug(old('title', $project->title)) }}" disabled>
+                value="{{ Str::slug(old('title', $project->slug)) }}" disabled>
         </div>
     </div>
     <div class="col-12">
@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="col-1">
-        <img src="{{ old('image', $project->image) ? $projcet->renderImage() : 'https://marcolanci.it/boolean/assets/placeholder.png' }}"
+        <img src="{{ old('image', $project->image) ? $project->renderImage() : 'https://marcolanci.it/boolean/assets/placeholder.png' }}"
             alt="project-img" id="preview" class="img-fluid rounded">
     </div>
     <div class="col-2">
@@ -89,12 +89,7 @@
 </form>
 
 @section('scripts')
-    <script>
-        const projectName = document.getElementById('name');
-        const slug = document.getElementById('slug');
-
-        projectName.addEventListener('blur', () => {
-            slug.value = projectName.value.trim().toLowerCase().split(' ').join('-');
-        })
-    </script>
+    {{-- Script creazione slug --}}
+    @vite('resources/js/make_slug.js')
+    @vite('resources/js/image_preview.js')
 @endsection

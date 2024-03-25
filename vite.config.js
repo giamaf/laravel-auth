@@ -13,6 +13,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/delete_confirmation.js',
                 'resources/js/image_preview',
+                'resources/js/make_slug',
             ],
             refresh: true,
         }),
