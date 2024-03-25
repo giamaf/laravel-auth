@@ -52,7 +52,7 @@
             <input type="text"
                 class="form-control @error('image') is-invalid @elseif (old('image', '')) is-valid @enderror"
                 id="image" name="image" placeholder="http:// or https://"
-                value="{{ old('image', $project->image) }}">
+                value="{{ old('image', $project->image ?? '') }}">
             @error('image')
                 <div class="invalid-feedback">
                     {{ $message }}

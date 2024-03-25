@@ -160,6 +160,7 @@ class ProjectController extends Controller
     public function trash()
     {
         $projects = Project::onlyTrashed()->get();
+
         return view('admin.projects.trash', compact('projects'));
     }
 
@@ -167,7 +168,7 @@ class ProjectController extends Controller
     {
         $project->restore();
 
-        return to_route('admin.projects.index')->with('message', 'Restore successful')->with('type', 'warning');
+        return to_route('admin.projects.index')->with('message', "Restore $project->name successful")->with('type', 'success');
     }
 
     public function drop(Project $project)
