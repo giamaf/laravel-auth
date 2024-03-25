@@ -54,7 +54,7 @@ class ProjectController extends Controller
             [
                 'name' => 'required|string|min:3|max:50|unique:projects',
                 'content' => 'required|string',
-                'image' => 'nullable|url',
+                'image' => 'nullable|image|mimes:png,jpg,jpeg',
                 'is_completed' => 'nullable|boolean',
             ],
             [
@@ -63,7 +63,8 @@ class ProjectController extends Controller
                 'name.max' => 'Project name must have max :max',
                 'name.unique' => 'This Project name already exsist',
                 'content.required' => 'Content required',
-                'image.url' => 'Invalid url',
+                'image.image' => 'File is not an image',
+                'image.mimes' => 'Invalid file extension. Accepted only: .png, .jpg, .jpeg ',
                 'is_completed.boolean' => 'Invalid field',
             ]
         );
@@ -115,7 +116,7 @@ class ProjectController extends Controller
             [
                 'name' => ['required', 'string', 'min:3', 'max:50', Rule::unique('projects')->ignore($project->id)],
                 'content' => 'required|string',
-                'image' => 'nullable|url',
+                'image' => 'nullable|image|mimes:png,jpg,jpeg',
                 'is_completed' => 'nullable|boolean',
             ],
             [
@@ -124,7 +125,8 @@ class ProjectController extends Controller
                 'name.max' => 'Project name must have max :max',
                 'name.unique' => 'This Project name already exsist',
                 'name.required' => 'Content required',
-                'image.url' => 'Invalid url',
+                'image.image' => 'File is not an image',
+                'image.mimes' => 'Invalid file extension. Accepted only: .png, .jpg, .jpeg ',
                 'is_completed.boolean' => 'Invalid field',
             ]
         );
