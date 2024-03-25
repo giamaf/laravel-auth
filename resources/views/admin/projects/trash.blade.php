@@ -85,7 +85,7 @@
             @empty
                 <tr>
                     <td colspan="7">
-                        <h2 class="text-center">No erased projects</h2>
+                        <h2 class="text-center my-2">No trashed projects</h2>
                     </td>
                 </tr>
             @endforelse

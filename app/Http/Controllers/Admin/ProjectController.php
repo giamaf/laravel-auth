@@ -99,7 +99,7 @@ class ProjectController extends Controller
             // Se invece inserisco qualcosa allora verrà creata(se non esiste) una cartella apposita per gli elementi da salvare
             // Il secondo argomento invece è il file da salvare
             // Il terzo parametro assegna lo slug come nome del file (montato in precedenza $imagename)
-            $image_url = Storage::putFileAs('project_image', $data['image'], $image_name);
+            $image_url = Storage::putFileAs('project_images', $data['image'], $image_name);
 
             // Inserisco l'immagine nell'istanza
             $project->image = $image_url;
@@ -177,7 +177,7 @@ class ProjectController extends Controller
             // Se invece inserisco qualcosa allora verrà creata(se non esiste) una cartella apposita per gli elementi da salvare
             // Il secondo argomento invece è il file da salvare
             // Il terzo parametro assegna lo slug come nome del file (montato in precedenza $imagename)
-            $image_url = Storage::putFileAs('project_image', $data['image'], $image_name);
+            $image_url = Storage::putFileAs('project_images', $data['image'], $image_name);
 
             // Inserisco l'immagine nell'istanza
             $project->image = $image_url;
